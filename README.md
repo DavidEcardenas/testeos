@@ -126,51 +126,6 @@ La Actividad 3 continúa esa decisión con un **ADR-002** que fija el diseño de
 
 
 
-## Código
-
-El diseño de dominio de la Actividad 3 se materializa en las carpetas `src/` y `tests/`, siguiendo Clean Architecture dentro del módulo Entregas.
-
-### Estructura de código
-
-```text
-src/
-├── Domain/
-│   └── Entregas/
-│       ├── Delivery.cs
-│       ├── DeliveryId.cs
-│       ├── CourierId.cs
-│       ├── OrderId.cs
-│       ├── DeliveryStatus.cs
-│       ├── DeliveryAddress.cs
-│       ├── DeliveryWindow.cs
-│       └── DomainException.cs
-└── Application/
-    └── Entregas/
-        ├── AssignCourierUseCase.cs
-        ├── AssignCourierCommand.cs
-        ├── AssignCourierResult.cs
-        ├── DeliveryAssigned.cs
-        └── Ports/
-            ├── IDeliveryRepository.cs
-            ├── ICourierAvailabilityPort.cs
-            ├── IRouteCapacityPort.cs
-            ├── IStockReservationPort.cs
-            └── IEventPublisher.cs
-
-tests/
-├── Domain.Tests/
-│   ├── DeliveryTests.cs
-│   ├── DeliveryAddressTests.cs
-│   └── DeliveryWindowTests.cs
-└── Application.Tests/
-    ├── AssignCourierUseCaseTests.cs
-    └── Fakes/
-        ├── FakeDeliveryRepository.cs
-        ├── FakeCourierAvailabilityPort.cs
-        ├── FakeRouteCapacityPort.cs
-        ├── FakeStockReservationPort.cs
-        └── FakeEventPublisher.cs
-```
 
 ### Cómo correr los tests
 
