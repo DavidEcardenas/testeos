@@ -189,21 +189,3 @@ dotnet test
 | INV-06 (no reasignar terminales) | `AssignCourier_WhenDelivered_Throws` |
 
 
-
-## Estado de las actividades
-
-| Actividad | Estado | Entregable |
-|---|---|---|
-| Actividad 1 | Completada | Análisis del problema, supuestos, contexto y decisiones iniciales |
-| Actividad 2 | Completada | Catálogo, escenarios, comparación, ADR-001 y criterios de verificación |
-| Actividad 3 | Completada | Diseño de dominio (ADR-002), casos de uso, puertos, adaptadores, C4 y tests |
-| Actividad 4 | Pendiente | Implementación de persistencia, adaptadores externos y flujo end-to-end |
-
-
-
-## Video de sustentación
-
-- Actividad 1: [enlace](URL_VIDEO_ACT1)
-- Actividad 2: [enlace](URL_VIDEO_ACT2)
-- Actividad 3: [enlace](URL_VIDEO_ACT3)
-- Actividad 4: pendiente
