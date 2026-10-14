@@ -1,0 +1,140 @@
+
+---
+
+
+
+````markdown
+# Diagrama C4 actualizado — Actividad 3
+
+Se mantienen los niveles 1 y 2 del ADR-001 y se agrega el nivel 3 para el
+módulo Entregas, que es el flujo modelado en esta actividad.
+
+## Nivel 1 — Contexto
+
+```mermaid
+flowchart TB
+    Cliente[Cliente final]
+    Admin[Admin de almacén]
+    Repartidor[Repartidor]
+    Soporte[Agente de soporte]
+
+    LM[LastMile<br/>Sistema operativo logístico]
+
+    ERP[ERP/CRM]
+    Canales[Canales de venta]
+    PG[Pasarela de pagos]
+    GEO[Geolocalización]
+    MSG[Notificaciones]
+
+    Cliente --> LM
+    Admin --> LM
+    Repartidor --> LM
+    Soporte --> LM
+    ERP <--> LM
+    Canales --> LM
+    LM <--> PG
+    LM <--> GEO
+    LM --> MSG
+```
+
+## Nivel 2 — Contenedores
+
+```mermaid
+flowchart TB
+    subgraph LM["LastMile (monolito modular)"]
+        API[API / Webhooks]
+        PED[Módulo Pedidos]
+        INV[Módulo Inventario]
+        ENT[Módulo Entregas]
+        INC[Módulo Incidencias]
+        NOT[Módulo Notificaciones]
+        INT[Módulo Integraciones]
+        DB[(BD única<br/>esquemas por módulo)]
+    end
+    API --> PED
+    PED <--> INV
+    PED --> ENT
+    ENT --> INC
+    ENT --> NOT
+    ENT --> DB
+    INV --> DB
+    PED --> DB
+    INT <--> ENT
+    INT <--> INV
+```
+
+## Nivel 3 — Componentes del módulo Entregas
+
+```mermaid
+flowchart LR
+    subgraph ENT["Módulo Entregas"]
+        CTRL[DeliveryController]
+        UC1[AssignCourierUseCase]
+        UC2[StartDeliveryUseCase]
+        UC3[ConfirmDeliveryUseCase]
+        UC4[ReportIncidentUseCase]
+        REPO[DeliveryRepository]
+        PORT1[ICourierAvailabilityPort]
+        PORT2[IRouteCapacityPort]
+        PORT3[IStockReservationPort]
+        PUB[IEventPublisher]
+        DOM[Delivery<br/>Aggregate Root]
+    end
+    CTRL --> UC1
+    CTRL --> UC2
+    CTRL --> UC3
+    CTRL --> UC4
+    UC1 --> DOM
+    UC1 --> REPO & PORT1 & PORT2 & PORT3 & PUB
+    UC2 --> DOM
+    UC3 --> DOM
+    UC4 --> DOM
+```
+
+## Capas dentro del módulo Entregas
+
+```mermaid
+flowchart TB
+    subgraph Dom["Domain"]
+        D1[Delivery]
+        D2[DeliveryId]
+        D3[DeliveryAddress]
+        D4[DeliveryWindow]
+        D5[DeliveryStatus]
+        D6[Invariantes]
+    end
+    subgraph App["Application"]
+        A1[AssignCourierUseCase]
+        A2[AssignCourierCommand]
+        A3[AssignCourierResult]
+        A4[Ports]
+    end
+    subgraph Infra["Infrastructure"]
+        I1[EfDeliveryRepository]
+        I2[HttpCourierAdapter]
+        I3[HttpRouteAdapter]
+        I4[InventoryHttpAdapter]
+        I5[RabbitEventPublisher]
+    end
+    A1 --> D1
+    A1 --> A4
+    I1 -.-> A4
+    I2 -.-> A4
+    I3 -.-> A4
+    I4 -.-> A4
+    I5 -.-> A4
+    style Dom fill:#e8f5e9
+    style App fill:#e3f2fd
+    style Infra fill:#fff3e0
+```
+
+## Cambios respecto a la Actividad 2
+
+| Elemento | Actividad 2 | Actividad 3 |
+|---|---|---|
+| C4 Nivel 1 | Definido | Sin cambios |
+| C4 Nivel 2 | Definido | Sin cambios |
+| C4 Nivel 3 | No existía | Agregado para el módulo Entregas |
+| Context Map | No existía | Agregado (ver `05-bounded-contexts.md`) |
+| Diagrama de capas | No existía | Agregado por módulo |
+| ADR | ADR-001 (estructura) | ADR-002 (dominio del módulo Entregas) |

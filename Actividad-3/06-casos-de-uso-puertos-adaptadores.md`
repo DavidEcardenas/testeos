@@ -1,0 +1,28 @@
+
+---
+
+
+
+````markdown
+# Casos de uso, puertos y adaptadores
+
+## Caso de uso principal: `AssignCourierUseCase`
+
+### Intención
+
+Asignar un repartidor disponible a una entrega preparada, respetando las
+invariantes del negocio y publicando el resultado para que otros módulos
+reaccionen.
+
+### Contrato de aplicación
+
+```csharp
+public sealed record AssignCourierCommand(
+    Guid DeliveryId,
+    Guid CourierId,
+    string RequestedBy);
+
+public sealed record AssignCourierResult(
+    Guid DeliveryId,
+    Guid CourierId,
+    DateTime AssignedAt);
