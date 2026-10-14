@@ -1,3 +1,8 @@
+
+---
+
+
+
 ```markdown
 # Invariantes y escenarios de aceptación
 
@@ -29,3 +34,11 @@ permite violarla, el modelo está mal.
 ## Escenarios de aceptación (Dado-Cuando-Entonces)
 
 ### QS-ASG-01 — Asignación exitosa
+
+```gherkin
+Dado una entrega en estado "Preparada" con stock reservado
+  Y un repartidor con disponibilidad "Available" y ruta no saturada
+Cuando el administrador solicita asignar la entrega al repartidor
+Entonces la entrega pasa a estado "Asignada"
+  Y se registra el courierId y la marca de tiempo
+  Y se publica un evento DeliveryAssigned
